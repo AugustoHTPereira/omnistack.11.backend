@@ -15,7 +15,7 @@ module.exports = {
 
     get: async (request, response) => {
         const { page = 1 } = request.query;
-        const incidents = await connection("incidents").limit(5).join("ongs", "ongs.id", "incidents.ong_id").offset((page - 1) * 5).select(['incidents.*', "ongs.name"]).orderBy("id", "asc");
+        const incidents = await connection("incidents").limit(5).join("ongs", "ongs.id", "incidents.ong_id").offset((page - 1) * 5).select(['incidents.*', "ongs.name", "ongs.phone", "ongs.email", "ongs.city", "ongs.uf"]).orderBy("id", "asc");
         const [count] = await connection("incidents").count();
         response.header("X-Total-Count", count[""]);
         response.header("X-Page", page);
